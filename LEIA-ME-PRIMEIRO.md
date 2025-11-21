@@ -4,6 +4,23 @@ Bem-vindo ao backend do **ConectaIES**! Este projeto está 100% implementado e p
 
 ---
 
+## ⚠️ ATUALIZAÇÃO IMPORTANTE (21/11/2025)
+
+🔄 **Backend refatorado para compatibilidade total com Frontend Angular!**
+
+**Principais mudanças:**
+- ✅ Resposta de autenticação agora retorna `token` (não `access_token`)
+- ✅ Resposta de autenticação agora retorna `usuario` (não `user`)
+- ✅ Campo `matricula` adicionado ao modelo de usuário
+- ✅ DTOs com validação automática implementados
+- ✅ Tratamento de erros HTTP melhorado
+
+📖 **Veja os detalhes:** [REFATORACAO-AUTH.md](./REFATORACAO-AUTH.md)  
+🧪 **Testes completos:** [TESTES-AUTH.md](./TESTES-AUTH.md)  
+🔗 **Compatibilidade:** [COMPATIBILIDADE-FRONTEND.md](./COMPATIBILIDADE-FRONTEND.md)
+
+---
+
 ## 🚀 Começar Agora
 
 ### Para desenvolvedores iniciantes ou com pressa:
@@ -23,6 +40,9 @@ Bem-vindo ao backend do **ConectaIES**! Este projeto está 100% implementado e p
 | **[GUIA-RAPIDO.md](./GUIA-RAPIDO.md)** | Start rápido em 5 minutos | Desenvolvedores experientes |
 | **[SETUP-COMPLETO.md](./SETUP-COMPLETO.md)** | Setup detalhado + Troubleshooting | Iniciantes ou primeira vez |
 | **[CHECKLIST-VALIDACAO.md](./CHECKLIST-VALIDACAO.md)** | Validar se tudo funciona | Todos (após setup) |
+| **[REFATORACAO-AUTH.md](./REFATORACAO-AUTH.md)** | Log de mudanças de autenticação | Desenvolvedores |
+| **[TESTES-AUTH.md](./TESTES-AUTH.md)** | Scripts de teste completos | Testes e validação |
+| **[COMPATIBILIDADE-FRONTEND.md](./COMPATIBILIDADE-FRONTEND.md)** | Contrato Backend ↔️ Frontend | Integração full-stack |
 
 ### 2. 📗 Referência Técnica
 

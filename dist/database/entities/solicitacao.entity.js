@@ -63,16 +63,16 @@ __decorate([
 ], Solicitacao.prototype, "descricao", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: 'enum',
-        enum: TipoSolicitacao,
+        type: 'varchar',
+        length: 50,
     }),
     __metadata("design:type", String)
 ], Solicitacao.prototype, "tipo", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: 'enum',
-        enum: StatusSolicitacao,
-        default: StatusSolicitacao.ABERTO,
+        type: 'varchar',
+        length: 50,
+        default: 'ABERTO',
     }),
     __metadata("design:type", String)
 ], Solicitacao.prototype, "status", void 0);

@@ -46,6 +46,19 @@ curl -X POST http://localhost:3000/api/auth/register \
   -d "{\"nome\":\"Admin\",\"email\":\"admin@test.com\",\"senha\":\"senha123\",\"tipoPerfil\":\"ADMIN\"}"
 ```
 
+**Resposta:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "usuario": {
+    "id": 1,
+    "nome": "Admin",
+    "email": "admin@test.com",
+    "tipoPerfil": "ADMIN"
+  }
+}
+```
+
 ### Login:
 ```bash
 curl -X POST http://localhost:3000/api/auth/login \
@@ -53,7 +66,7 @@ curl -X POST http://localhost:3000/api/auth/login \
   -d "{\"email\":\"admin@test.com\",\"senha\":\"senha123\"}"
 ```
 
-Copie o `access_token` retornado!
+Copie o `token` retornado!
 
 ### Criar solicitação:
 ```bash

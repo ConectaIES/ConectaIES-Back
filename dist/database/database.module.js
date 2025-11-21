@@ -19,17 +19,32 @@ exports.DatabaseModule = DatabaseModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forRootAsync({
                 imports: [config_1.ConfigModule],
-                useFactory: (configService) => ({
-                    type: 'mysql',
-                    host: configService.get('DB_HOST'),
-                    port: configService.get('DB_PORT'),
-                    username: configService.get('DB_USER'),
-                    password: configService.get('DB_PASSWORD'),
-                    database: configService.get('DB_NAME'),
-                    entities: [entities_1.User, entities_1.Solicitacao, entities_1.Anexo, entities_1.EventoHistorico],
-                    synchronize: true,
-                    logging: true,
-                }),
+                useFactory: (configService) => {
+                    const dbConfig = {
+                        type: 'mssql',
+                        host: configService.get('DB_HOST') || 'localhost',
+                        port: parseInt(configService.get('DB_PORT') || '1433', 10),
+                        username: configService.get('DB_USER') || 'sa',
+                        password: configService.get('DB_PASSWORD') || '',
+                        database: configService.get('DB_NAME') || 'conecta_ies',
+                        entities: [entities_1.User, entities_1.Solicitacao, entities_1.Anexo, entities_1.EventoHistorico],
+                        synchronize: true,
+                        logging: true,
+                        options: {
+                            encrypt: false,
+                            trustServerCertificate: true,
+                        },
+                    };
+                    console.log('🔧 TypeORM Config:', {
+                        type: dbConfig.type,
+                        host: dbConfig.host,
+                        port: dbConfig.port,
+                        database: dbConfig.database,
+                        username: dbConfig.username,
+                        hasPassword: !!dbConfig.password,
+                    });
+                    return dbConfig;
+                },
                 inject: [config_1.ConfigService],
             }),
         ],

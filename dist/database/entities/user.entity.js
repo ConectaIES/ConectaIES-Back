@@ -25,6 +25,7 @@ let User = class User {
     email;
     senhaHash;
     tipoPerfil;
+    matricula;
     createdAt;
     updatedAt;
     solicitacoes;
@@ -49,12 +50,16 @@ __decorate([
 ], User.prototype, "senhaHash", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: 'enum',
-        enum: TipoPerfil,
+        type: 'varchar',
+        length: 20,
         name: 'tipo_perfil',
     }),
     __metadata("design:type", String)
 ], User.prototype, "tipoPerfil", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ length: 50, nullable: true }),
+    __metadata("design:type", String)
+], User.prototype, "matricula", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
     __metadata("design:type", Date)

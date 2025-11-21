@@ -25,6 +25,7 @@ $body = @{
     email = "admin@test.com"
     senha = "senha123"
     tipoPerfil = "ADMIN"
+    matricula = "ADM2025001"
 } | ConvertTo-Json
 
 Invoke-RestMethod -Uri "http://localhost:3000/api/auth/register" `
@@ -41,7 +42,8 @@ curl -X POST http://localhost:3000/api/auth/register \
     "nome": "Admin Teste",
     "email": "admin@test.com",
     "senha": "senha123",
-    "tipoPerfil": "ADMIN"
+    "tipoPerfil": "ADMIN",
+    "matricula": "ADM2025001"
   }'
 ```
 
@@ -56,7 +58,8 @@ fetch('http://localhost:3000/api/auth/register', {
     nome: 'Admin Teste',
     email: 'admin@test.com',
     senha: 'senha123',
-    tipoPerfil: 'ADMIN'
+    tipoPerfil: 'ADMIN',
+    matricula: 'ADM2025001'
   })
 })
   .then(res => res.json())
@@ -66,17 +69,19 @@ fetch('http://localhost:3000/api/auth/register', {
 **Resposta:**
 ```json
 {
-  "user": {
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "usuario": {
     "id": 1,
     "nome": "Admin Teste",
     "email": "admin@test.com",
-    "tipoPerfil": "ADMIN"
-  },
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    "tipoPerfil": "ADMIN",
+    "matricula": "ADM2025001",
+    "createdAt": "2025-11-21T10:00:00.000Z"
+  }
 }
 ```
 
-⚠️ **Copie o `access_token` para usar nas próximas requisições!**
+⚠️ **Copie o `token` para usar nas próximas requisições!**
 
 ---
 
@@ -89,10 +94,14 @@ $body = @{
     senha = "senha123"
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri "http://localhost:3000/api/auth/login" `
+$response = Invoke-RestMethod -Uri "http://localhost:3000/api/auth/login" `
     -Method POST `
     -ContentType "application/json" `
     -Body $body
+
+# Salvar token para usar depois
+$token = $response.token
+Write-Host "Token: $token"
 ```
 
 **cURL:**
@@ -117,9 +126,25 @@ fetch('http://localhost:3000/api/auth/login', {
 })
   .then(res => res.json())
   .then(data => {
-    localStorage.setItem('token', data.access_token);
-    console.log('Token salvo:', data.access_token);
+    localStorage.setItem('conecta_ies_token', data.token);
+    localStorage.setItem('conecta_ies_user', JSON.stringify(data.usuario));
+    console.log('Token salvo:', data.token);
   });
+```
+
+**Resposta:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "usuario": {
+    "id": 1,
+    "nome": "Admin Teste",
+    "email": "admin@test.com",
+    "tipoPerfil": "ADMIN",
+    "matricula": "ADM2025001",
+    "createdAt": "2025-11-21T10:00:00.000Z"
+  }
+}
 ```
 
 ---

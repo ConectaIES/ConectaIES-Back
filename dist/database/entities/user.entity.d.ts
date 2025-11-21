@@ -11,6 +11,7 @@ export declare class User {
     email: string;
     senhaHash: string;
     tipoPerfil: TipoPerfil;
+    matricula: string;
     createdAt: Date;
     updatedAt: Date;
     solicitacoes: Solicitacao[];

@@ -47,8 +47,8 @@ __decorate([
 ], EventoHistorico.prototype, "solicitacao", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: 'enum',
-        enum: TipoEvento,
+        type: 'varchar',
+        length: 50,
         name: 'evento_tipo',
     }),
     __metadata("design:type", String)

@@ -30,8 +30,8 @@ export class EventoHistorico {
   solicitacao: Solicitacao;
 
   @Column({
-    type: 'enum',
-    enum: TipoEvento,
+    type: 'varchar',
+    length: 50,
     name: 'evento_tipo',
   })
   eventoTipo: TipoEvento;

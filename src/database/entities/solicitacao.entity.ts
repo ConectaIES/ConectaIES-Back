@@ -41,15 +41,15 @@ export class Solicitacao {
   descricao: string;
 
   @Column({
-    type: 'enum',
-    enum: TipoSolicitacao,
+    type: 'varchar',
+    length: 50,
   })
   tipo: TipoSolicitacao;
 
   @Column({
-    type: 'enum',
-    enum: StatusSolicitacao,
-    default: StatusSolicitacao.ABERTO,
+    type: 'varchar',
+    length: 50,
+    default: 'ABERTO',
   })
   status: StatusSolicitacao;
 

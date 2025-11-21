@@ -30,11 +30,14 @@ export class User {
   senhaHash: string;
 
   @Column({
-    type: 'enum',
-    enum: TipoPerfil,
+    type: 'varchar',
+    length: 20,
     name: 'tipo_perfil',
   })
   tipoPerfil: TipoPerfil;
+
+  @Column({ length: 50, nullable: true })
+  matricula: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

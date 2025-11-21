@@ -59,12 +59,14 @@ let AuthService = class AuthService {
         this.userRepository = userRepository;
         this.jwtService = jwtService;
     }
-    async login(email, senha) {
-        const user = await this.userRepository.findOne({ where: { email } });
+    async login(loginDto) {
+        const user = await this.userRepository.findOne({
+            where: { email: loginDto.email },
+        });
         if (!user) {
             throw new common_1.UnauthorizedException('Credenciais inválidas');
         }
-        const senhaValida = await bcrypt.compare(senha, user.senhaHash);
+        const senhaValida = await bcrypt.compare(loginDto.senha, user.senhaHash);
         if (!senhaValida) {
             throw new common_1.UnauthorizedException('Credenciais inválidas');
         }
@@ -74,31 +76,37 @@ let AuthService = class AuthService {
             tipoPerfil: user.tipoPerfil,
         };
         return {
-            access_token: this.jwtService.sign(payload),
-            user: {
+            token: this.jwtService.sign(payload),
+            usuario: {
                 id: user.id,
                 nome: user.nome,
                 email: user.email,
                 tipoPerfil: user.tipoPerfil,
+                matricula: user.matricula,
+                createdAt: user.createdAt,
             },
         };
     }
-    async register(nome, email, senha, tipoPerfil) {
+    async register(registerDto) {
         const existingUser = await this.userRepository.findOne({
-            where: { email },
+            where: { email: registerDto.email },
         });
         if (existingUser) {
-            throw new common_1.UnauthorizedException('E-mail já cadastrado');
+            throw new common_1.ConflictException('E-mail já cadastrado');
         }
-        const senhaHash = await bcrypt.hash(senha, 10);
+        const senhaHash = await bcrypt.hash(registerDto.senha, 10);
         const user = this.userRepository.create({
-            nome,
-            email,
+            nome: registerDto.nome,
+            email: registerDto.email,
             senhaHash,
-            tipoPerfil: tipoPerfil,
+            tipoPerfil: registerDto.tipoPerfil,
+            matricula: registerDto.matricula,
         });
         await this.userRepository.save(user);
-        return this.login(email, senha);
+        return this.login({
+            email: registerDto.email,
+            senha: registerDto.senha,
+        });
     }
 };
 exports.AuthService = AuthService;
