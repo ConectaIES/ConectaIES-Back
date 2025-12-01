@@ -28,7 +28,7 @@ exports.DatabaseModule = DatabaseModule = __decorate([
                         password: configService.get('DB_PASSWORD') || '',
                         database: configService.get('DB_NAME') || 'conecta_ies',
                         entities: [entities_1.User, entities_1.Solicitacao, entities_1.Anexo, entities_1.EventoHistorico],
-                        synchronize: true,
+                        synchronize: false,
                         logging: true,
                         options: {
                             encrypt: false,
