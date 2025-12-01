@@ -53,7 +53,9 @@ let SolicitacoesService = class SolicitacoesService {
         }
         await this.criarEvento(solicitacao.id, entities_1.TipoEvento.STATUS_CHANGE, 'Solicitação criada', usuarioId);
         const solicitacaoCompleta = await this.obterPorId(solicitacao.id);
-        this.websocketGateway.emitirNovaSolicitacao(solicitacaoCompleta);
+        if (solicitacaoCompleta) {
+            this.websocketGateway.emitirNovaSolicitacao(solicitacaoCompleta);
+        }
         return solicitacaoCompleta;
     }
     async listarMinhas(usuarioId) {

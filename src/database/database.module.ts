@@ -16,7 +16,7 @@ import { User, Solicitacao, Anexo, EventoHistorico } from './entities';
           password: configService.get<string>('DB_PASSWORD') || '',
           database: configService.get<string>('DB_NAME') || 'conecta_ies',
           entities: [User, Solicitacao, Anexo, EventoHistorico],
-          synchronize: false, // Desabilitado - schema já criado pelo script SQL
+          synchronize: true, // Auto-cria tabelas em desenvolvimento
           logging: true,
           options: {
             encrypt: false, // Para SQL Server local

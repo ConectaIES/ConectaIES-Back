@@ -4,6 +4,9 @@ export declare class WebsocketGateway implements OnGatewayConnection, OnGatewayD
     server: Server;
     handleConnection(client: Socket): void;
     handleDisconnect(client: Socket): void;
-    emitirNovaSolicitacao(solicitacao: any): void;
+    emitirNovaSolicitacao(solicitacao: {
+        id: number;
+        [key: string]: any;
+    }): void;
     emitirAtualizacaoStatus(solicitacaoId: number, status: string): void;
 }

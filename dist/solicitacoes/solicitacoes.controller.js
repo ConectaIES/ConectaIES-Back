@@ -19,6 +19,7 @@ const multer_1 = require("multer");
 const path_1 = require("path");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const solicitacoes_service_1 = require("./solicitacoes.service");
+const entities_1 = require("../database/entities");
 const dto_1 = require("./dto");
 let SolicitacoesController = class SolicitacoesController {
     solicitacoesService;
@@ -35,7 +36,7 @@ let SolicitacoesController = class SolicitacoesController {
         return this.solicitacoesService.listarMinhas(req.user.id);
     }
     async listarNovas(req) {
-        if (req.user.tipoPerfil !== 'ADMIN') {
+        if (req.user.tipoPerfil !== entities_1.TipoPerfil.ADMIN) {
             throw new common_1.ForbiddenException('Acesso negado');
         }
         return this.solicitacoesService.listarNovas();
@@ -53,13 +54,13 @@ let SolicitacoesController = class SolicitacoesController {
         return this.solicitacoesService.marcarResolvida(+id, req.user.id);
     }
     async atribuir(id, dto, req) {
-        if (req.user.tipoPerfil !== 'ADMIN') {
+        if (req.user.tipoPerfil !== entities_1.TipoPerfil.ADMIN) {
             throw new common_1.ForbiddenException('Acesso negado');
         }
         return this.solicitacoesService.atribuir(+id, dto.usuarioId, dto.nota, req.user.id);
     }
     async primeiraResposta(id, dto, req) {
-        if (req.user.tipoPerfil !== 'ADMIN') {
+        if (req.user.tipoPerfil !== entities_1.TipoPerfil.ADMIN) {
             throw new common_1.ForbiddenException('Acesso negado');
         }
         return this.solicitacoesService.primeiraResposta(+id, dto.resposta, req.user.id);
