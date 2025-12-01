@@ -27,7 +27,7 @@ export class WebsocketGateway
   }
 
   // Emitir nova solicitação para todos os clientes (especialmente admins)
-  emitirNovaSolicitacao(solicitacao: any) {
+  emitirNovaSolicitacao(solicitacao: { id: number; [key: string]: any }) {
     this.server.emit('nova-solicitacao', solicitacao);
     console.log('WebSocket: nova-solicitacao emitido', solicitacao.id);
   }

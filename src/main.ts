@@ -26,4 +26,4 @@ async function bootstrap() {
   console.log('🚀 Servidor rodando em http://localhost:3000');
   console.log('🔌 WebSocket disponível em ws://localhost:3000');
 }
-bootstrap();
+void bootstrap();

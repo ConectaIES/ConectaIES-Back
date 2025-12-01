@@ -10,11 +10,11 @@ import { User, Solicitacao, Anexo, EventoHistorico } from './entities';
       useFactory: (configService: ConfigService) => {
         const dbConfig = {
           type: 'mssql' as const,
-          host: configService.get('DB_HOST') || 'localhost',
-          port: parseInt(configService.get('DB_PORT') || '1433', 10),
-          username: configService.get('DB_USER') || 'sa',
-          password: configService.get('DB_PASSWORD') || '',
-          database: configService.get('DB_NAME') || 'conecta_ies',
+          host: configService.get<string>('DB_HOST') || 'localhost',
+          port: parseInt(configService.get<string>('DB_PORT') || '1433', 10),
+          username: configService.get<string>('DB_USER') || 'sa',
+          password: configService.get<string>('DB_PASSWORD') || '',
+          database: configService.get<string>('DB_NAME') || 'conecta_ies',
           entities: [User, Solicitacao, Anexo, EventoHistorico],
           synchronize: false, // Desabilitado - schema já criado pelo script SQL
           logging: true,

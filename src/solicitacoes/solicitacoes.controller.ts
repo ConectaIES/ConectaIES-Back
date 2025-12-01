@@ -16,13 +16,19 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RequestUser } from '../auth/jwt.strategy';
 import { SolicitacoesService } from './solicitacoes.service';
+import { TipoPerfil } from '../database/entities';
 import {
   CriarSolicitacaoDto,
   AdicionarComentarioDto,
   PrimeiraRespostaDto,
   AtribuirSolicitacaoDto,
 } from './dto';
+
+interface AuthenticatedRequest {
+  user: RequestUser;
+}
 
 @Controller('solicitacoes')
 @UseGuards(JwtAuthGuard)
@@ -64,7 +70,7 @@ export class SolicitacoesController {
   async criar(
     @Body() dto: CriarSolicitacaoDto,
     @UploadedFiles() files: Express.Multer.File[],
-    @Request() req,
+    @Request() req: AuthenticatedRequest,
   ) {
     if (files && files.length > 3) {
       throw new BadRequestException('Máximo de 3 anexos permitidos');
@@ -74,13 +80,13 @@ export class SolicitacoesController {
   }
 
   @Get('minhas')
-  async listarMinhas(@Request() req) {
+  async listarMinhas(@Request() req: AuthenticatedRequest) {
     return this.solicitacoesService.listarMinhas(req.user.id);
   }
 
   @Get('admin/novas')
-  async listarNovas(@Request() req) {
-    if (req.user.tipoPerfil !== 'ADMIN') {
+  async listarNovas(@Request() req: AuthenticatedRequest) {
+    if (req.user.tipoPerfil !== TipoPerfil.ADMIN) {
       throw new ForbiddenException('Acesso negado');
     }
     return this.solicitacoesService.listarNovas();
@@ -100,7 +106,7 @@ export class SolicitacoesController {
   async adicionarComentario(
     @Param('id') id: string,
     @Body() dto: AdicionarComentarioDto,
-    @Request() req,
+    @Request() req: AuthenticatedRequest,
   ) {
     return this.solicitacoesService.adicionarComentario(
       +id,
@@ -110,7 +116,10 @@ export class SolicitacoesController {
   }
 
   @Patch(':id/resolver')
-  async marcarResolvida(@Param('id') id: string, @Request() req) {
+  async marcarResolvida(
+    @Param('id') id: string,
+    @Request() req: AuthenticatedRequest,
+  ) {
     return this.solicitacoesService.marcarResolvida(+id, req.user.id);
   }
 
@@ -118,9 +127,9 @@ export class SolicitacoesController {
   async atribuir(
     @Param('id') id: string,
     @Body() dto: AtribuirSolicitacaoDto,
-    @Request() req,
+    @Request() req: AuthenticatedRequest,
   ) {
-    if (req.user.tipoPerfil !== 'ADMIN') {
+    if (req.user.tipoPerfil !== TipoPerfil.ADMIN) {
       throw new ForbiddenException('Acesso negado');
     }
     return this.solicitacoesService.atribuir(
@@ -135,9 +144,9 @@ export class SolicitacoesController {
   async primeiraResposta(
     @Param('id') id: string,
     @Body() dto: PrimeiraRespostaDto,
-    @Request() req,
+    @Request() req: AuthenticatedRequest,
   ) {
-    if (req.user.tipoPerfil !== 'ADMIN') {
+    if (req.user.tipoPerfil !== TipoPerfil.ADMIN) {
       throw new ForbiddenException('Acesso negado');
     }
     return this.solicitacoesService.primeiraResposta(

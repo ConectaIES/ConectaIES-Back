@@ -68,7 +68,9 @@ export class SolicitacoesService {
     const solicitacaoCompleta = await this.obterPorId(solicitacao.id);
 
     // Emitir WebSocket para admins
-    this.websocketGateway.emitirNovaSolicitacao(solicitacaoCompleta);
+    if (solicitacaoCompleta) {
+      this.websocketGateway.emitirNovaSolicitacao(solicitacaoCompleta);
+    }
 
     return solicitacaoCompleta;
   }
