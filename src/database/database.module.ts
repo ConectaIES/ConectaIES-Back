@@ -16,11 +16,12 @@ import { User, Solicitacao, Anexo, EventoHistorico } from './entities';
           password: configService.get<string>('DB_PASSWORD') || '',
           database: configService.get<string>('DB_NAME') || 'conecta_ies',
           entities: [User, Solicitacao, Anexo, EventoHistorico],
-          synchronize: true, // Auto-cria tabelas em desenvolvimento
+          synchronize: false, // Não criar tabelas automaticamente - usar banco existente
           logging: true,
           options: {
             encrypt: false, // Para SQL Server local
             trustServerCertificate: true, // Para desenvolvimento
+            enableArithAbort: true,
           },
         };
         

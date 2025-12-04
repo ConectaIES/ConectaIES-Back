@@ -9,25 +9,21 @@ Backend da plataforma ConectaIES desenvolvido com NestJS, TypeORM, MySQL e Socke
 npm install
 ```
 
-### 2. Configurar MySQL
+### 2. Configurar SQL Server
 
 Edite `.env` com suas credenciais:
 ```env
 DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
+DB_PORT=1433
+DB_USER=sa
 DB_PASSWORD=SUA_SENHA_AQUI
 DB_NAME=conecta_ies
 ```
 
-### 3. Criar banco de dados
+### 3. Banco de Dados Existente
 
-No MySQL:
-```sql
-CREATE DATABASE conecta_ies;
-```
-
-O TypeORM criará as tabelas automaticamente!
+O backend conectará ao banco SQL Server **existente** `conecta_ies`.
+As tabelas devem estar criadas previamente (synchronize: false).
 
 ### 4. Executar servidor
 
