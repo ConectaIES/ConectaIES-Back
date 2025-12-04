@@ -92,6 +92,14 @@ export class SolicitacoesController {
     return this.solicitacoesService.listarNovas();
   }
 
+  @Get('admin/resolvidas')
+  async listarResolvidas(@Request() req: AuthenticatedRequest) {
+    if (req.user.tipoPerfil !== TipoPerfil.ADMIN) {
+      throw new ForbiddenException('Acesso negado');
+    }
+    return this.solicitacoesService.listarResolvidas();
+  }
+
   @Get(':id')
   async obter(@Param('id') id: string) {
     return this.solicitacoesService.obterPorId(+id);

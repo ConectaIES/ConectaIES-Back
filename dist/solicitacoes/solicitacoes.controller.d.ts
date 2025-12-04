@@ -10,6 +10,7 @@ export declare class SolicitacoesController {
     criar(dto: CriarSolicitacaoDto, files: Express.Multer.File[], req: AuthenticatedRequest): Promise<any>;
     listarMinhas(req: AuthenticatedRequest): Promise<any[]>;
     listarNovas(req: AuthenticatedRequest): Promise<any[]>;
+    listarResolvidas(req: AuthenticatedRequest): Promise<import("../database/entities").Solicitacao[]>;
     obter(id: string): Promise<any>;
     obterHistorico(id: string): Promise<{
         id: number;

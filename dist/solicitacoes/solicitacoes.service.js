@@ -120,6 +120,16 @@ let SolicitacoesService = class SolicitacoesService {
         });
         return solicitacoes.map((s) => this.calcularTimeToTmrBreach(s));
     }
+    async listarResolvidas() {
+        const solicitacoes = await this.solicitacaoRepository.find({
+            where: {
+                status: entities_1.StatusSolicitacao.RESOLVIDO,
+            },
+            relations: ['usuario'],
+            order: { updatedAt: 'DESC' },
+        });
+        return solicitacoes;
+    }
     async atribuir(solicitacaoId, usuarioIdAtribuido, nota, adminId) {
         await this.solicitacaoRepository.update(solicitacaoId, {
             status: entities_1.StatusSolicitacao.EM_ANALISE,

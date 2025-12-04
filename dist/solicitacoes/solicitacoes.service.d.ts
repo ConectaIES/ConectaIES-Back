@@ -23,6 +23,7 @@ export declare class SolicitacoesService {
     adicionarComentario(solicitacaoId: number, comentario: string, usuarioId: number): Promise<EventoHistorico>;
     marcarResolvida(solicitacaoId: number, usuarioId: number): Promise<any>;
     listarNovas(): Promise<any[]>;
+    listarResolvidas(): Promise<Solicitacao[]>;
     atribuir(solicitacaoId: number, usuarioIdAtribuido: number, nota: string, adminId: number): Promise<any>;
     primeiraResposta(solicitacaoId: number, resposta: string, adminId: number): Promise<any>;
     private gerarProtocolo;

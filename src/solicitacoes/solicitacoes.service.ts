@@ -175,6 +175,18 @@ export class SolicitacoesService {
     return solicitacoes.map((s) => this.calcularTimeToTmrBreach(s));
   }
 
+  async listarResolvidas() {
+    const solicitacoes = await this.solicitacaoRepository.find({
+      where: {
+        status: StatusSolicitacao.RESOLVIDO,
+      },
+      relations: ['usuario'],
+      order: { updatedAt: 'DESC' },
+    });
+
+    return solicitacoes;
+  }
+
   async atribuir(
     solicitacaoId: number,
     usuarioIdAtribuido: number,

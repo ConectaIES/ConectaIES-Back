@@ -41,6 +41,12 @@ let SolicitacoesController = class SolicitacoesController {
         }
         return this.solicitacoesService.listarNovas();
     }
+    async listarResolvidas(req) {
+        if (req.user.tipoPerfil !== entities_1.TipoPerfil.ADMIN) {
+            throw new common_1.ForbiddenException('Acesso negado');
+        }
+        return this.solicitacoesService.listarResolvidas();
+    }
     async obter(id) {
         return this.solicitacoesService.obterPorId(+id);
     }
@@ -120,6 +126,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], SolicitacoesController.prototype, "listarNovas", null);
+__decorate([
+    (0, common_1.Get)('admin/resolvidas'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], SolicitacoesController.prototype, "listarResolvidas", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
