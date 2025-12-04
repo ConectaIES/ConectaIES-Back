@@ -168,7 +168,7 @@ INSERT INTO users (nome, email, senha_hash, tipo_perfil, matricula, created_at, 
 VALUES (
     'Administrador do Sistema',
     'admin@conectaies.com',
-    '$2b$10$rqGHWQxLZ4Y.PqXdKMxwCeLvFIrPRQxJGKLQKGqXYwKGZx1qLJ9Bi',
+    '$2b$10$m9WYgkJbmCGKODEWL7NnAu9I88SE7tkFNQyYJ44yWGqPOqXxAgNua',
     'ADMIN',
     'ADM001',
     GETDATE(),
