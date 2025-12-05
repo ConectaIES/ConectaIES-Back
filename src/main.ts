@@ -12,8 +12,10 @@ async function bootstrap() {
   // CORS para o front-end Angular
   app.enableCors({
     origin: [
+      'https://conecta-iesrg66.vercel.app',
+      'https://conecta-ies-front-rg66-l3m24f6oi-mister-guedes-projects.vercel.app',
+      'http://localhost:4200',
       frontendUrl || 'http://localhost:4200',
-      'http://localhost:4200', // Desenvolvimento local
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
