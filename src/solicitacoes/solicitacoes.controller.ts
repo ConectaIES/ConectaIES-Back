@@ -13,6 +13,7 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { Multer } from 'multer';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -69,7 +70,7 @@ export class SolicitacoesController {
   )
   async criar(
     @Body() dto: CriarSolicitacaoDto,
-    @UploadedFiles() files: Express.Multer.File[],
+    @UploadedFiles() files: Multer.File[],
     @Request() req: AuthenticatedRequest,
   ) {
     if (files && files.length > 3) {

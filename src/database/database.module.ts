@@ -18,7 +18,7 @@ import { SeedService } from './seed.service';
           database: configService.get<string>('DB_NAME'),
           entities: [User, Solicitacao, Anexo, EventoHistorico],
           synchronize: true, // Criar tabelas automaticamente no PostgreSQL vazio
-          logging: ['error', 'warn', 'schema'],
+          logging: configService.get<string>('NODE_ENV') === 'production' ? false : true,
           ssl: configService.get<string>('NODE_ENV') === 'production' 
             ? { rejectUnauthorized: false } 
             : false,

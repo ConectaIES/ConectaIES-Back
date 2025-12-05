@@ -37,7 +37,7 @@ export class SeedService implements OnModuleInit {
         email: adminEmail,
         senhaHash: hashedPassword,
         tipoPerfil: TipoPerfil.ADMIN,
-        matricula: null,
+        matricula: undefined,
       });
 
       await this.userRepository.save(admin);

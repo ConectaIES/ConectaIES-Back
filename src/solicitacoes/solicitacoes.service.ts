@@ -26,7 +26,7 @@ export class SolicitacoesService {
   async criar(
     dto: CriarSolicitacaoDto,
     usuarioId: number,
-    files?: Express.Multer.File[],
+    files?: Multer.File[],
   ) {
     // Gerar protocolo único
     const protocolo = await this.gerarProtocolo();

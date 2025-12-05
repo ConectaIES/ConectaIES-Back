@@ -37,7 +37,7 @@ export class User {
   tipoPerfil: TipoPerfil;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
-  matricula: string;
+  matricula?: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
