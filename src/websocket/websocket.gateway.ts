@@ -8,12 +8,22 @@ import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   cors: {
-    origin: [
-      'https://conecta-iesrg66.vercel.app',
-      'https://conecta-ies-front-rg66-l3m24f6oi-mister-guedes-projects.vercel.app',
-      'http://localhost:4200',
-      process.env.FRONTEND_URL || 'http://localhost:4200',
-    ],
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        'https://conecta-iesrg66.vercel.app',
+        'http://localhost:4200',
+        process.env.FRONTEND_URL,
+      ];
+      
+      // Aceitar qualquer URL do Vercel (preview deployments)
+      const isVercelApp = origin && origin.includes('vercel.app');
+      
+      if (!origin || allowedOrigins.includes(origin) || isVercelApp) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   },
 })

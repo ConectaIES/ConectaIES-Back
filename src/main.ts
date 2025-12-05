@@ -11,12 +11,22 @@ async function bootstrap() {
   
   // CORS para o front-end Angular
   app.enableCors({
-    origin: [
-      'https://conecta-iesrg66.vercel.app',
-      'https://conecta-ies-front-rg66-l3m24f6oi-mister-guedes-projects.vercel.app',
-      'http://localhost:4200',
-      frontendUrl || 'http://localhost:4200',
-    ],
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        'https://conecta-iesrg66.vercel.app',
+        'http://localhost:4200',
+        frontendUrl,
+      ];
+      
+      // Aceitar qualquer URL do Vercel (preview deployments)
+      const isVercelApp = origin && origin.includes('vercel.app');
+      
+      if (!origin || allowedOrigins.includes(origin) || isVercelApp) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
