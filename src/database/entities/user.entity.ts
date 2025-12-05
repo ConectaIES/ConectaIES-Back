@@ -20,23 +20,23 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 200 })
+  @Column({ type: 'varchar', length: 200 })
   nome: string;
 
-  @Column({ length: 200, unique: true })
+  @Column({ type: 'varchar', length: 200, unique: true })
   email: string;
 
-  @Column({ length: 255, name: 'senha_hash' })
+  @Column({ type: 'varchar', length: 255, name: 'senha_hash' })
   senhaHash: string;
 
   @Column({
-    type: 'varchar',
-    length: 20,
+    type: 'enum',
+    enum: TipoPerfil,
     name: 'tipo_perfil',
   })
   tipoPerfil: TipoPerfil;
 
-  @Column({ length: 50, nullable: true })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   matricula: string;
 
   @CreateDateColumn({ name: 'created_at' })

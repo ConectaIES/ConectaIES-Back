@@ -20,7 +20,7 @@ export class EventoHistorico {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'solicitacao_id' })
+  @Column({ type: 'int', name: 'solicitacao_id' })
   solicitacaoId: number;
 
   @ManyToOne(() => Solicitacao, (solicitacao) => solicitacao.eventos, {
@@ -30,16 +30,16 @@ export class EventoHistorico {
   solicitacao: Solicitacao;
 
   @Column({
-    type: 'varchar',
-    length: 50,
+    type: 'enum',
+    enum: TipoEvento,
     name: 'evento_tipo',
   })
   eventoTipo: TipoEvento;
 
-  @Column('text')
+  @Column({ type: 'text' })
   descricao: string;
 
-  @Column({ nullable: true, name: 'usuario_id' })
+  @Column({ type: 'int', nullable: true, name: 'usuario_id' })
   usuarioId: number;
 
   @ManyToOne(() => User, (user) => user.eventos, { onDelete: 'SET NULL' })

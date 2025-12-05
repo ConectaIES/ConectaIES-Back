@@ -31,25 +31,25 @@ export class Solicitacao {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 50, unique: true })
+  @Column({ type: 'varchar', length: 50, unique: true })
   protocolo: string;
 
-  @Column({ length: 200 })
+  @Column({ type: 'varchar', length: 200 })
   titulo: string;
 
-  @Column('text')
+  @Column({ type: 'text' })
   descricao: string;
 
   @Column({
-    type: 'varchar',
-    length: 50,
+    type: 'enum',
+    enum: TipoSolicitacao,
   })
   tipo: TipoSolicitacao;
 
   @Column({
-    type: 'varchar',
-    length: 50,
-    default: 'ABERTO',
+    type: 'enum',
+    enum: StatusSolicitacao,
+    default: StatusSolicitacao.ABERTO,
   })
   status: StatusSolicitacao;
 

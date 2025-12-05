@@ -1,20 +1,30 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  
+  const configService = app.get(ConfigService);
+  const frontendUrl = configService.get<string>('FRONTEND_URL');
+  
   // CORS para o front-end Angular
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: [
+      frontendUrl || 'http://localhost:4200',
+      'http://localhost:4200', // Desenvolvimento local
+    ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
   // Validação global
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
+      forbidNonWhitelisted: true,
       transform: true,
     }),
   );
@@ -22,8 +32,11 @@ async function bootstrap() {
   // Prefixo global da API
   app.setGlobalPrefix('api');
 
-  await app.listen(3000);
-  console.log('🚀 Servidor rodando em http://localhost:3000');
-  console.log('🔌 WebSocket disponível em ws://localhost:3000');
+  const port = configService.get<number>('PORT') || 3000;
+  await app.listen(port, '0.0.0.0');
+  
+  console.log(`🚀 Servidor rodando na porta ${port}`);
+  console.log(`🌍 Ambiente: ${configService.get<string>('NODE_ENV')}`);
+  console.log(`🔌 WebSocket disponível`);
 }
 void bootstrap();

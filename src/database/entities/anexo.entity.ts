@@ -13,7 +13,7 @@ export class Anexo {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'solicitacao_id' })
+  @Column({ type: 'int', name: 'solicitacao_id' })
   solicitacaoId: number;
 
   @ManyToOne(() => Solicitacao, (solicitacao) => solicitacao.anexos, {
@@ -22,13 +22,13 @@ export class Anexo {
   @JoinColumn({ name: 'solicitacao_id' })
   solicitacao: Solicitacao;
 
-  @Column({ length: 255 })
+  @Column({ type: 'varchar', length: 255 })
   nome: string;
 
-  @Column({ length: 500 })
+  @Column({ type: 'varchar', length: 500 })
   url: string;
 
-  @Column({ length: 100 })
+  @Column({ type: 'varchar', length: 100 })
   tipo: string;
 
   @CreateDateColumn({ name: 'created_at' })

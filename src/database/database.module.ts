@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User, Solicitacao, Anexo, EventoHistorico } from './entities';
+import { SeedService } from './seed.service';
 
 @Module({
   imports: [
@@ -9,20 +10,18 @@ import { User, Solicitacao, Anexo, EventoHistorico } from './entities';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
         const dbConfig = {
-          type: 'mssql' as const,
-          host: configService.get<string>('DB_HOST') || 'localhost',
-          port: parseInt(configService.get<string>('DB_PORT') || '1433', 10),
-          username: configService.get<string>('DB_USER') || 'sa',
-          password: configService.get<string>('DB_PASSWORD') || '',
-          database: configService.get<string>('DB_NAME') || 'conecta_ies',
+          type: 'postgres' as const,
+          host: configService.get<string>('DB_HOST'),
+          port: parseInt(configService.get<string>('DB_PORT') || '5432', 10),
+          username: configService.get<string>('DB_USER'),
+          password: configService.get<string>('DB_PASSWORD'),
+          database: configService.get<string>('DB_NAME'),
           entities: [User, Solicitacao, Anexo, EventoHistorico],
-          synchronize: false, // Não criar tabelas automaticamente - usar banco existente
-          logging: true,
-          options: {
-            encrypt: false, // Para SQL Server local
-            trustServerCertificate: true, // Para desenvolvimento
-            enableArithAbort: true,
-          },
+          synchronize: true, // Criar tabelas automaticamente no PostgreSQL vazio
+          logging: ['error', 'warn', 'schema'],
+          ssl: configService.get<string>('NODE_ENV') === 'production' 
+            ? { rejectUnauthorized: false } 
+            : false,
         };
         
         console.log('🔧 TypeORM Config:', {
@@ -32,12 +31,16 @@ import { User, Solicitacao, Anexo, EventoHistorico } from './entities';
           database: dbConfig.database,
           username: dbConfig.username,
           hasPassword: !!dbConfig.password,
+          ssl: !!dbConfig.ssl,
         });
         
         return dbConfig;
       },
       inject: [ConfigService],
     }),
+    TypeOrmModule.forFeature([User, Solicitacao, Anexo, EventoHistorico]),
   ],
+  providers: [SeedService],
+  exports: [TypeOrmModule],
 })
 export class DatabaseModule {}
