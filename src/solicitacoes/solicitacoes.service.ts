@@ -245,7 +245,7 @@ export class SolicitacoesService {
     const ano = new Date().getFullYear();
     const count = await this.solicitacaoRepository
       .createQueryBuilder('s')
-      .where('YEAR(s.created_at) = :ano', { ano })
+      .where('EXTRACT(YEAR FROM s.created_at) = :ano', { ano })
       .getCount();
 
     const sequencial = String(count + 1).padStart(4, '0');
